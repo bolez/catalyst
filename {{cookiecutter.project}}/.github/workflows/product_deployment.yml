@@ -29,7 +29,9 @@ jobs:
         id: step03
         run: |
           source venv/bin/activate
-          cd snowlanf/
+          {% endraw %}
+          {% raw %}
+          cd {{cookiecutter.project}}/
           dbt docs generate --profiles-dir ./
           mkdir -p ${{ github.workspace }}/docs
           cp -r target/* ${{ github.workspace }}/docs/
