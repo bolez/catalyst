@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "contract"
+version = "0.1.0"
+description = ""
+authors = ["gauravbole <gaurav.r.bole@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+dbt-core = "^1.9.1"
+dbt-snowflake = "^1.9.0"
+cookiecutter = "^2.6.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

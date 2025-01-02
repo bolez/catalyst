@@ -1,0 +1,65 @@
+{% raw %}
+name: "dbt-docs-publish"
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Step 01 - Checkout current branch"
+        id: step01
+        uses: actions/checkout@v3
+
+      - name: "Step 02 - Set up Python environment and install dbt"
+        id: step02
+        run: |
+          python3 -m venv venv
+          source venv/bin/activate
+          pip install --upgrade pip
+          pip install dbt-core dbt-snowflake  # Adjust based on your adapter
+          dbt --version
+
+      - name: "Step 03 - Generate dbt docs"
+        id: step03
+        run: |
+          source venv/bin/activate
+          cd snowlanf/
+          dbt docs generate --profiles-dir ./
+          mkdir -p ${{ github.workspace }}/docs
+          cp -r target/* ${{ github.workspace }}/docs/
+          
+      - name: "Step 04 - Add .nojekyll file"
+        id: step04
+        run: |
+          touch ${{ github.workspace }}/docs/.nojekyll
+
+      - name: "Step 05 - Upload pages to artifact"
+        id: step05
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ github.workspace }}/docs
+
+  deploy-to-github-pages:
+    needs: build
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+{% endraw %}
