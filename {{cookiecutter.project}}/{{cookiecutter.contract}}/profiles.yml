@@ -1,5 +1,5 @@
-{% raw %}
 {{cookiecutter.project}}:
+{% raw %}
   outputs:
     dev:
       account: "{{ env_var('SNF_ACCOUNT') }}"
