@@ -1,3 +1,4 @@
+{% raw %}
 {cookicutter.project}:
   outputs:
     dev:
@@ -11,3 +12,4 @@
       user: "{{ env_var('SNF_USER') }}"
       warehouse:  "{{ env_var('SNF_WH_NAME') }}"
   target: dev
+{% endraw %}
