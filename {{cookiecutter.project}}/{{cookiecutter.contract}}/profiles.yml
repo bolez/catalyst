@@ -1,15 +1,15 @@
-{{cookiecutter.project}}:
-{% raw %}
+{{cookiecutter.contract}}:
   outputs:
     dev:
-      account: "{{ env_var('SNF_ACCOUNT') }}"
-      database: "{{ env_var('SNF_DB_NAME') }}"
+      account: "ik00045.ap-southeast-1"
+      database: "{{cookiecutter.database}}"
+      {% raw %}
+      user: "{{ env_var('SNF_USER') }}"
       password:  "{{ env_var('SNF_PASSWORD') }}"
-      role:  "{{ env_var('SNF_ROLE') }}"
-      schema: "prod"
+      {% endraw %}
+      role:  "{{cookiecutter.role}}"
+      schema: "{{cookiecutter.schema}}"
       threads: 1
       type: snowflake
-      user: "{{ env_var('SNF_USER') }}"
-      warehouse:  "{{ env_var('SNF_WH_NAME') }}"
+      warehouse:  "{{cookiecutter.wh_name}}"
   target: dev
-{% endraw %}

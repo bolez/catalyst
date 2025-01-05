@@ -6,7 +6,10 @@ on:
     branches:
       - master
   workflow_dispatch:
-
+{% endraw %}
+env:
+  PROJECT_NAME: "{{cookiecutter.project}}" 
+{% raw %}
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -29,9 +32,7 @@ jobs:
         id: step03
         run: |
           source venv/bin/activate
-          {% endraw %}
-          {% raw %}
-          cd {{cookiecutter.project}}/
+          cd $PROJECT_NAME/
           dbt docs generate --profiles-dir ./
           mkdir -p ${{ github.workspace }}/docs
           cp -r target/* ${{ github.workspace }}/docs/

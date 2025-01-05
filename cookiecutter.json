@@ -1,5 +1,8 @@
 {
     "project": "",
-    "contract": ""
-
+    "contract": "",
+    "database": "",
+    "schema": "",
+    "role": "",
+    "wh_name": ""
 }
