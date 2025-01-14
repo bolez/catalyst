@@ -2,11 +2,17 @@
 # Name your project! Project names should contain only lowercase characters
 # and underscores. A good package name should reflect your organization's
 # name or the intended use of these models
-name: '{{cookiecutter.project}}'
+name: '{{cookiecutter.product_name}}'
 version: '1.0.0'
 
+vars:
+  share_name: '{{cookiecutter.product_name}}_share'
+  domain_database: '{{cookiecutter.domain_name}}_db'
+  schema: '{{cookiecutter.product_name}}'
+  product_name: '{{cookiecutter.product_name}}'
+
 # This setting configures which "profile" dbt uses for this project.
-profile: '{{cookiecutter.contract}}'
+profile: '{{cookiecutter.product_name}}'
 
 # These configurations specify where dbt should look for different types of files.
 # The `model-paths` config, for example, states that models in this project can be
@@ -23,4 +29,16 @@ clean-targets:         # directories to be removed by `dbt clean`
   - "dbt_packages"
 
 
-
+models:
+  {{cookiecutter.product_name}}:
+  {% raw %}
+    staging:
+      +materialized: table
+    marts:
+      +materialized: table
+      tags: ["marts", var('product_name'), this]
+      pre-hook: 
+        - "{{create_share(var('share_name'), this)}}"
+      post-hook: 
+        - "{{list_product(var('schema'), this, var('share_name'))}}"
+{% endraw %}

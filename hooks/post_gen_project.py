@@ -7,6 +7,7 @@ from pathlib import Path
 def run_command(command):
     """Run a shell command and display its output."""
     try:
+        print(f"Running command: {command}")
         result = subprocess.run(command, shell=True)
         print(result.stdout)
     except subprocess.CalledProcessError as e:
@@ -14,8 +15,9 @@ def run_command(command):
         print(f"Error: {e.stderr}")
 
 def main():
-    project_name = "{{cookiecutter.project}}"
-    contract_name = "{{cookiecutter.contract}}"
+    
+    project_name = "{{cookiecutter.product_name}}"
+    contract_name = "{{cookiecutter.domain_name}}"
 
     current_dir = Path(os.getcwd())
 
@@ -23,6 +25,7 @@ def main():
 
     os.chdir(target_dir)
     print("Project directory: ", os.getcwd())
+    run_command("dbt deps --profiles-dir ./")
     print("Do you want to add a source database? (yes/no)")
     add_source = input().strip().lower()
 
@@ -56,12 +59,12 @@ def main():
     }
 
     print("Running `generate_source` operation...")
-    run_command(f"dbt --quiet run-operation generate_source --args '{json.dumps(source_args)}' --profiles-dir ./ > ./models/staging/{schema_name}_source.yml")
+    run_command(f"dbt --quiet run-operation generate_source --args '{json.dumps(source_args)}' --profiles-dir ./ > ./models/staging/source.yml")
 
     for table_name in table_names:
         base_model_args = {
-            "source_name": f"{schema_name}",
-            "table_name": table_name,
+            "source_name": f"{schema_name.lower()}",
+            "table_name": table_name.lower(),
         }
         print(f"Running `generate_base_model` for table: {table_name}...")
         run_command(f"dbt --quiet run-operation generate_base_model --args '{json.dumps(base_model_args)}' --profiles-dir ./ > ./models/staging/{schema_name}_{table_name}.sql")

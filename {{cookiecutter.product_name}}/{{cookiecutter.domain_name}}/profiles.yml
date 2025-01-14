@@ -1,0 +1,17 @@
+{{cookiecutter.product_name}}:
+  outputs:
+    dev:
+      account: "la14000.ap-southeast-1"
+      database: "{{cookiecutter.domain_name}}_db"
+      # {% raw %}
+      # user: "{{ env_var('SNF_USER') }}"
+      # password:  "{{ env_var('SNF_PASSWORD') }}"
+      user: gauravsnow
+      password:  Gau@81294
+      # {% endraw %}
+      role:  "{{cookiecutter.domain_name}}_engginer"
+      schema: "{{cookiecutter.product_name}}"
+      threads: 1
+      type: snowflake
+      warehouse:  "{{cookiecutter.domain_name}}_wh"
+  target: dev
