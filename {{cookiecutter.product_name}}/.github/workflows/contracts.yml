@@ -1,0 +1,43 @@
+
+name: Push Contract to Repo
+
+on: [push]
+
+env:
+PROJECT_NAME: "{{cookiecutter.product_name}}" 
+DOMAIN_NAME: "{{cookiecutter.domain_name}}"
+jobs:
+  push_contract:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v2
+
+    - name: Clone contract repo
+      run: git clone https://github.com/bolez/contract.git
+
+    - name: Copy schema
+      run: |
+        ls -a
+        mkdir -p contract/product_names
+        cp $DOMAIN_NAME/models/marts/contracts/* contract/$PROJECT_NAME/orders.yml
+        
+
+    - name: Commit changes
+      # if: env.schema_changed == 'true'
+      run: |
+        cd contract
+        git config user.name "github-actions"
+        git config user.email "actions@github.com"
+        git add .
+        git commit -m "Update schema for product_name"
+      # if: success()
+      {% raw %}
+    - name: Push changes
+      #if: env.schema_changed == 'true'
+      run: |
+        cd contract
+        git push https://x-access-token:${{ secrets.GH }}@github.com/bolez/contract.git main
+      # if: success()
+      {% endraw %}

@@ -18,3 +18,8 @@ docs:
 	dbt docs generate $(profile_dir)
 	dbt docs serve $(profile_dir)
 
+
+.PHONY: contract
+
+contract:
+	python contract/generator.py
