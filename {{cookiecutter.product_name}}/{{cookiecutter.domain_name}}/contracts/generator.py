@@ -1,6 +1,6 @@
 import subprocess
 import yaml
-
+{% raw %}
 def run_dbt_generate(model_name):
     """Run dbt operation to generate schema YAML for a specific model."""
     try:
@@ -30,3 +30,4 @@ def run_dbt_generate(model_name):
 if __name__ == "__main__":
     model_name = input("Enter the model name: ").strip()
     run_dbt_generate(model_name)
+{% endraw %}

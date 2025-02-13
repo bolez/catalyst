@@ -1,13 +1,13 @@
 {{cookiecutter.product_name}}:
   outputs:
     dev:
-      account: "la14000.ap-southeast-1"
+      account: "so25712.ap-southeast-1"
       database: "{{cookiecutter.domain_name}}_db"
       # {% raw %}
       # user: "{{ env_var('SNF_USER') }}"
       # password:  "{{ env_var('SNF_PASSWORD') }}"
       user: gauravsnow
-      password:  Gau@81294
+      password:  
       # {% endraw %}
       role:  "{{cookiecutter.domain_name}}_engginer"
       schema: "{{cookiecutter.product_name}}"

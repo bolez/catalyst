@@ -27,7 +27,7 @@
               - all_accounts : true
           access:
           - account : 'PQ57060'
-            roles: ['ACCOUNTADMIN']
+            roles: ['ACCOUNTADMIN', {{ var('engg_role')}]
         locations:
           access_regions:
           - name: "ALL"
