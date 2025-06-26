@@ -1,7 +1,7 @@
 {{cookiecutter.product_name}}:
   outputs:
     dev:
-      account: "SRLSHZB-RC25629"
+      account: "KUTQCBB-VF37130"
       database: "{{cookiecutter.domain_name}}_db"
       user: "gb"
       password: "Gau@snowland#1"
