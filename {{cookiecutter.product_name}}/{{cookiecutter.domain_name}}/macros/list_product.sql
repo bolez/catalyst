@@ -1,6 +1,12 @@
 
+
+
 {% macro list_product(object_schema, object_name, share_name) %}
     GRANT SELECT ON table  {{object_name}} TO SHARE {{ share_name }};
+{% set full_account = target.account %}
+{% set short_account = full_account.split('-')[-1] %}
+
+
 
   {% set object_name_str = object_name.render() %}
   {% set table_name = object_name_str.split('.')[-1] %}
@@ -15,8 +21,10 @@
       description: "Created using dbt and cookicutter {{share_name}}"
       organization_profile: INTERNAL
       organization_targets:
-          access:
-          - all_accounts : false 
+        discovery:
+        - all_accounts : true 
+        access:
+        - account: {{ short_account }}
       locations:
         access_regions:
         - name: "ALL"
@@ -29,6 +37,20 @@
             - name: "{{table_name}}"
               schema: "{{object_schema}}"
               domain: "TABLE"
+      auto_fulfillment:
+        refresh_type: "SUB_DATABASE"
+        refresh_schedule: "10 MINUTE"
+      data_attributes:
+        refresh_rate: DAILY
+        geography:
+            geo_option: NOT_APPLICABLE
+            time:
+                granularity: MONTHLY
+                time_range:
+                    time_frame: LAST
+                    unit: MONTHS
+                    value: 6
+
       usage_examples:
         - title: "Return all {{object_name}} for the {{object_name}}"
           description: "Example of how to select {{object_name}} information"
