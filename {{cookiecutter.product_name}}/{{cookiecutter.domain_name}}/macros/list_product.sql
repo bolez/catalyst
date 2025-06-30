@@ -26,6 +26,8 @@
         - all_accounts : true 
         access:
         - account: {{ short_account }}
+          roles:
+          - {{target.role}}
       locations:
         access_regions:
         - name: "ALL"
@@ -38,9 +40,7 @@
             - name: "{{table_name}}"
               schema: "{{object_schema}}"
               domain: "TABLE"
-      auto_fulfillment:
-        refresh_type: "SUB_DATABASE"
-        refresh_schedule: "10 MINUTE"
+
       data_attributes:
         refresh_rate: DAILY
         geography:
