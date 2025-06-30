@@ -31,8 +31,8 @@
       locations:
         access_regions:
         - name: "ALL"
-      support_contact: "support@somedomain.com"
-      approver_contact: "approver@somedomain.com"
+      support_contact: "gauravbole2@gmail.com"
+      approver_contact: "gauravbole2@gmail.com"
       data_dictionary:
         featured:
           database: "{{var('domain_database')}}"
