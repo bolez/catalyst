@@ -22,4 +22,4 @@ docs:
 .PHONY: contract
 
 contract:
-	python contract/generator.py
+	python contracts/generator.py
